@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS habits (
+  id SERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  description TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS habit_logs (
+  id SERIAL PRIMARY KEY,
+  habit_id INTEGER NOT NULL REFERENCES habits(id) ON DELETE CASCADE,
+  date DATE NOT NULL,
+  completed BOOLEAN NOT NULL DEFAULT TRUE,
+  UNIQUE (habit_id, date)
+);
